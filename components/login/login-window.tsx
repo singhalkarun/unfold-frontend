@@ -9,9 +9,11 @@ export const LoginWindow: NextPage<Props> = (props: Props) => {
   const [name, setName] = useState('')
 
   return (
-    <div className='flex h-screen'>
-      <div className='mx-2 my-auto md:m-auto border-black border-2 p-8 rounded'>
-        <h1 className='text-4xl mb-8'>Welcome to FreeYourMind</h1>
+    <div className='flex h-screen bg-green-100'>
+      <div className='mx-2 my-auto md:m-auto  p-8 rounded'>
+        <h1 className='text-4xl mb-8 text-center'>
+          Welcome to Random Chat Space
+        </h1>
         <div className='grid grid-rows-2'></div>
         <div className='row-span-1'>
           <form
@@ -22,7 +24,7 @@ export const LoginWindow: NextPage<Props> = (props: Props) => {
             <div className=' border-2 border-black rounded p-2 text-lg mb-4'>
               <input
                 required
-                className='outline-0'
+                className='outline-0 bg-transparent'
                 placeholder='Enter you name here'
                 onChange={(e) => {
                   setName(e.target.value)

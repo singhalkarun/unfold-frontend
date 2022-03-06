@@ -132,6 +132,7 @@ const Home: NextPage<Props> = (props: Props) => {
     }
 
     const socket: Socket = io(props.socketServerUrl, {
+      path: '/websocket',
       query: {
         name,
       },
