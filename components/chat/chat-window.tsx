@@ -47,7 +47,7 @@ export const ChatWindow: NextPage<Props> = (props: Props) => {
   return (
     <>
       {props.connectedUser !== null ? (
-        <div className='grid grid-rows-8 h-screen w-screen '>
+        <div className='grid grid-rows-8 h-5/6 w-screen '>
           <div className='row-span-1 grid grid-cols-8'>
             <div className='hidden md:inline md:col-span-1'></div>
             <div className='col-span-8 md:col-span-6 bg-gradient-to-r from-red-300 to-blue-300 rounded m-4 p-1 flex justify-center items-center'>
