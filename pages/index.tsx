@@ -27,7 +27,7 @@ interface Props {
 }
 var messageStore: Array<Message> = []
 
-const Home: NextPage<Props> = (props: Props) => {]
+const Home: NextPage<Props> = (props: Props) => {
   const messageWindowRef =
     useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>
 
@@ -70,7 +70,7 @@ const Home: NextPage<Props> = (props: Props) => {]
     setTimeout(() => {
       if (messageWindowRef.current) {
         messageWindowRef.current.scrollTop =
-         messageWindowRef.current?.scrollHeight
+          messageWindowRef.current?.scrollHeight
       }
     }, 500)
   }
