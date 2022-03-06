@@ -16,6 +16,7 @@ import { Socket } from 'socket.io-client'
 import io from 'socket.io-client'
 import { SocketAddress } from 'net'
 import Image from 'next/image'
+import illustration from '../public/happy.png'
 
 export interface User {
   name: string
@@ -178,7 +179,7 @@ const Home: NextPage<Props> = (props: Props) => {
         <div className='grid grid-cols-2 grid-flow-row h-1/2 md:h-screen flex items-center'>
           <div className='col-span-2 md:col-span-1'>
             <Image
-              src={'/../public/happy.png'}
+              src={illustration}
               width='50%'
               height='50%'
               layout='responsive'
