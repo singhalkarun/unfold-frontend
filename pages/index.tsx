@@ -28,6 +28,13 @@ interface Props {
 var messageStore: Array<Message> = []
 
 const Home: NextPage<Props> = (props: Props) => {
+  const currentUrl = 'https://randomchat.space/'
+  const previewImage = '../public/happy.png'
+  const siteName = 'Random Chat'
+  const pageTitle = 'Random Chat'
+  const description =
+    'Random Chat Space is built for users looking to talk somebody anonymously.'
+
   const messageWindowRef =
     useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>
 
@@ -177,15 +184,15 @@ const Home: NextPage<Props> = (props: Props) => {
       />
       <Head>
         <title>Random Chat</title>
-        <meta
-          name='description'
-          content='Random Chat Space is built for users looking to talk somebody anonymously.'
-        />
+        <meta name='description' content={description} />
         <link rel='canonical' href='https://randomchat.space/' />
         <meta name='robots' content='index, follow' />
         <meta name='viewport' content='width=device-width,initial-scale=1.0' />
-        <meta property='og:title' content='Random Chat' />
-        <meta property='og:image' content='../public/happy.png' />
+        <meta property='og:url' content={currentUrl} key='ogurl' />
+        <meta property='og:image' content={previewImage} key='ogimage' />
+        <meta property='og:site_name' content={siteName} key='ogsitename' />
+        <meta property='og:title' content={pageTitle} key='ogtitle' />
+        <meta property='og:description' content={description} key='ogdesc' />
       </Head>
       {currentUser === null ? (
         <div className='grid grid-cols-2 grid-flow-row h-1/2 md:h-screen flex items-center'>
