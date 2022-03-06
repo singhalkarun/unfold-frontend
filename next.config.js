@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   env: {
     googleAnalyticsMeasurementId: process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID,
+    socketServerUrl: process.env.SOCKET_SERVER_URL,
   },
 }
 

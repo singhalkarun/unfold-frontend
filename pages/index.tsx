@@ -12,12 +12,20 @@ import Head from 'next/head'
 import * as gtag from '../src/lib/gtag'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
+import { Socket } from 'socket.io-client'
+import io from 'socket.io-client'
+import { SocketAddress } from 'net'
 
 export interface User {
   name: string
 }
 
-const Home: NextPage = () => {
+interface Props {
+  socketServerUrl: string
+}
+var messageStore: Array<Message> = []
+
+const Home: NextPage<Props> = (props: Props) => {
   const router = useRouter()
 
   const [connectedUser, setConnectedUser] = useState<User | null>(null)
@@ -26,7 +34,13 @@ const Home: NextPage = () => {
 
   const [messages, setMessages] = useState<Array<Message>>([])
 
-  const [sentMessageCount, setSentMessageCount] = useState(0)
+  const [socket, setSocket] = useState<Socket | null>(null)
+
+  useEffect(() => {
+    window.addEventListener('onbeforeunload', () => {
+      socket?.close
+    })
+  })
 
   useEffect(() => {
     const handleRouteChange = (url: any) => {
@@ -44,7 +58,9 @@ const Home: NextPage = () => {
       type: MessageType.Received,
     }
 
-    setMessages([...messages, message])
+    messageStore.push(message)
+
+    setMessages([...messageStore])
   }
 
   const onSend = (text: string) => {
@@ -56,40 +72,74 @@ const Home: NextPage = () => {
       type: MessageType.Sent,
     }
 
-    setMessages([...messages, message])
-    setSentMessageCount(sentMessageCount + 1)
+    socket?.emit('message', {
+      text,
+    })
+
+    messageStore.push(message)
+
+    setMessages([...messageStore])
   }
 
   const onExit = () => {
     setConnectedUser(null)
     setMessages([])
+    messageStore = []
 
-    setTimeout(() => connectUser(), 3000)
+    socket?.emit('userDisconnect', {})
+
+    setCurrentUser(null)
+
+    socket?.close()
   }
 
-  const connectUser = async () => {
-    try {
-      const config: Config = {
-        dictionaries: [names],
-      }
-      const name: string = uniqueNamesGenerator(config) // Winona
+  useEffect(() => {
+    socket?.onAny((event) => {
+      console.log(event)
+    })
+    socket?.on('connect', () => {
+      socket.emit('userConnect', {})
+    })
 
-      const userFound: User = {
-        name,
+    socket?.on('userConnect', (args: any) => {
+      const user: User = {
+        name: args.name,
       }
 
-      setConnectedUser(userFound)
-    } catch (error) {}
-  }
+      setConnectedUser(user)
+    })
+
+    socket?.on('message', (args: any) => {
+      onReceive(args.text)
+    })
+
+    socket?.on('userDisconnect', () => {
+      setConnectedUser(null)
+      setMessages([])
+      messageStore = []
+
+      socket.emit('userConnect', {})
+    })
+
+    return () => {
+      socket?.close()
+    }
+  }, [socket])
 
   const onStart = (name: string) => {
     const user: User = {
       name,
     }
 
-    setCurrentUser(user)
+    const socket: Socket = io(props.socketServerUrl, {
+      query: {
+        name,
+      },
+    })
 
-    connectUser()
+    setSocket(socket)
+
+    setCurrentUser(user)
   }
 
   return (
@@ -128,6 +178,16 @@ const Home: NextPage = () => {
       )}
     </>
   )
+}
+
+export async function getStaticProps() {
+  const socketServerUrl = process.env.socketServerUrl
+
+  return {
+    props: {
+      socketServerUrl,
+    },
+  }
 }
 
 export default Home
