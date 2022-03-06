@@ -184,6 +184,8 @@ const Home: NextPage<Props> = (props: Props) => {
         <link rel='canonical' href='https://randomchat.space/' />
         <meta name='robots' content='index, follow' />
         <meta name='viewport' content='width=device-width,initial-scale=1.0' />
+        <meta property='og:title' content='Random Chat' />
+        <meta property='og:image' content='../public/happy.png' />
       </Head>
       {currentUser === null ? (
         <div className='grid grid-cols-2 grid-flow-row h-1/2 md:h-screen flex items-center'>
