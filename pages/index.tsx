@@ -15,6 +15,7 @@ import Script from 'next/script'
 import { Socket } from 'socket.io-client'
 import io from 'socket.io-client'
 import { SocketAddress } from 'net'
+import Image from 'next/image'
 
 export interface User {
   name: string
@@ -144,7 +145,7 @@ const Home: NextPage<Props> = (props: Props) => {
   }
 
   return (
-    <>
+    <div className='overflow-hidden'>
       <Script
         strategy='afterInteractive'
         src={`https://www.googletagmanager.com/gtag/js?id=G-${gtag.GA_TRACKING_ID}`}
@@ -164,10 +165,29 @@ const Home: NextPage<Props> = (props: Props) => {
         }}
       />
       <Head>
-        <title>Free Your Mind</title>
+        <title>Random Chat</title>
+        <meta
+          name='description'
+          content='Random Chat Space is built for users looking to talk somebody anonymously.'
+        />
+        <link rel='canonical' href='https://randomchat.space/' />
+        <meta name='robots' content='index, follow' />
+        <meta name='viewport' content='width=device-width,initial-scale=1.0' />
       </Head>
       {currentUser === null ? (
-        <LoginWindow onStart={onStart} />
+        <div className='grid grid-cols-2 grid-flow-row h-1/2 md:h-screen'>
+          <div className='col-span-2 md:col-span-1'>
+            <Image
+              src={'/../public/happy.png'}
+              width='50%'
+              height='50%'
+              layout='responsive'
+            />
+          </div>
+          <div className='col-span-2 md:col-span-1'>
+            <LoginWindow onStart={onStart} />
+          </div>
+        </div>
       ) : (
         <ChatWindow
           currentUser={currentUser}
@@ -177,7 +197,7 @@ const Home: NextPage<Props> = (props: Props) => {
           onExit={onExit}
         />
       )}
-    </>
+    </div>
   )
 }
 
