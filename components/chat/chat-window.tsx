@@ -60,7 +60,7 @@ export const ChatWindow: NextPage<Props> = (props: Props) => {
           <div className='row-span-6 grid grid-cols-8'>
             <div className='hidden md:inline col-span-1 '></div>
             <div
-              ref={messageWindowRef}
+              ref={props.messageWindowRef}
               className='m-4 rounded no-scrollbar bg-gradient-to-r from-green-300  to-purple-300 col-span-8 md:col-span-6 px-2 pt-2 pb-2 overflow-y-scroll'
             >
               {props.messages.map((message: Message, index: number) => {
