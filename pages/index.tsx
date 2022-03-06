@@ -175,7 +175,7 @@ const Home: NextPage<Props> = (props: Props) => {
         <meta name='viewport' content='width=device-width,initial-scale=1.0' />
       </Head>
       {currentUser === null ? (
-        <div className='grid grid-cols-2 grid-flow-row h-1/2 md:h-screen'>
+        <div className='grid grid-cols-2 grid-flow-row h-1/2 md:h-screen flex items-center'>
           <div className='col-span-2 md:col-span-1'>
             <Image
               src={'/../public/happy.png'}
