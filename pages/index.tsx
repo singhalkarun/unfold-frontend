@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { NextPage } from 'next'
-import { useEffect, useState } from 'react'
+import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import {
   ChatWindow,
   Message,
@@ -27,7 +27,10 @@ interface Props {
 }
 var messageStore: Array<Message> = []
 
-const Home: NextPage<Props> = (props: Props) => {
+const Home: NextPage<Props> = (props: Props) => {]
+  const messageWindowRef =
+    useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>
+
   const router = useRouter()
 
   const [connectedUser, setConnectedUser] = useState<User | null>(null)
@@ -63,6 +66,13 @@ const Home: NextPage<Props> = (props: Props) => {
     messageStore.push(message)
 
     setMessages([...messageStore])
+
+    setTimeout(() => {
+      if (messageWindowRef.current) {
+        messageWindowRef.current.scrollTop =
+         messageWindowRef.current?.scrollHeight
+      }
+    }, 500)
   }
 
   const onSend = (text: string) => {
@@ -196,6 +206,7 @@ const Home: NextPage<Props> = (props: Props) => {
           messages={messages}
           onSend={onSend}
           onExit={onExit}
+          messageWindowRef={messageWindowRef}
         />
       )}
     </div>

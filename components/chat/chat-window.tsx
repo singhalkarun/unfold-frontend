@@ -24,12 +24,11 @@ interface Props {
   messages: Array<Message>
   onSend: Function
   onExit: Function
+  messageWindowRef: MutableRefObject<HTMLDivElement>
 }
 
 export const ChatWindow: NextPage<Props> = (props: Props) => {
   const [text, setText] = useState('')
-  const messageWindowRef =
-    useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>
 
   const sendMessage = () => {
     props.onSend(text)
@@ -37,9 +36,9 @@ export const ChatWindow: NextPage<Props> = (props: Props) => {
     setText('')
 
     setTimeout(() => {
-      if (messageWindowRef.current) {
-        messageWindowRef.current.scrollTop =
-          messageWindowRef.current?.scrollHeight
+      if (props.messageWindowRef.current) {
+        props.messageWindowRef.current.scrollTop =
+          props.messageWindowRef.current?.scrollHeight
       }
     }, 500)
   }
