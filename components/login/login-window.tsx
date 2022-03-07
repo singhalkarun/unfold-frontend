@@ -9,8 +9,8 @@ export const LoginWindow: NextPage<Props> = (props: Props) => {
   const [name, setName] = useState('')
 
   return (
-    <div className='flex h-1/2 md:h-screen'>
-      <div className='mx-2 my-auto md:m-auto  p-8 rounded'>
+    <div className='flex h-1/2 md:h-screen '>
+      <div className='mx-2 my-auto md:m-auto  p-8 rounded font-heading'>
         <h1 className='text-4xl mb-8 text-center'>
           Welcome to Random Chat Space
         </h1>

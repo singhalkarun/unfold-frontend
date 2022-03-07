@@ -16,7 +16,7 @@ import { Socket } from 'socket.io-client'
 import io from 'socket.io-client'
 import { SocketAddress } from 'net'
 import Image from 'next/image'
-import illustration from '../public/happy.png'
+import illustration from '../public/illustration.gif'
 import useSound from 'use-sound'
 
 export interface User {
@@ -30,7 +30,7 @@ var messageStore: Array<Message> = []
 
 const Home: NextPage<Props> = (props: Props) => {
   const currentUrl = 'https://randomchat.space/'
-  const previewImage = '../public/happy.png'
+  const previewImage = '../public/illustration.gif'
   const siteName = 'Random Chat'
   const pageTitle = 'Random Chat'
   const description =

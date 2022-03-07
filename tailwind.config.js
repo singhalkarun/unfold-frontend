@@ -11,7 +11,10 @@ module.exports = {
         8: 'repeat(8, minmax(0, 1fr))',
       },
       fontFamily: {
-        heading: ['Inconsolata', 'monospace'],
+        heading: ['Fredoka', 'Work', 'Sans'],
+      },
+      colors: {
+        skyBlue: '#85dfef',
       },
     },
   },

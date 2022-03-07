@@ -61,7 +61,7 @@ export const ChatWindow: NextPage<Props> = (props: Props) => {
             <div className='hidden md:inline col-span-1 '></div>
             <div
               ref={props.messageWindowRef}
-              className='m-2 rounded no-scrollbar bg-gradient-to-r from-green-300  to-purple-300 col-span-8 md:col-span-6 px-2 pt-2 pb-2 overflow-y-scroll'
+              className='m-2 rounded no-scrollbar bg-skyBlue col-span-8 md:col-span-6 px-2 pt-2 pb-2 overflow-y-scroll'
             >
               {props.messages.map((message: Message, index: number) => {
                 if (message.type === MessageType.Sent) {
