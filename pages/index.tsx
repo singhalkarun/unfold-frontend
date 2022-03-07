@@ -6,7 +6,6 @@ import {
   Message,
   MessageType,
 } from '../components/chat/chat-window'
-import { LoginWindow } from '../components/login/login-window'
 import { uniqueNamesGenerator, Config, names } from 'unique-names-generator'
 import Head from 'next/head'
 import * as gtag from '../src/lib/gtag'
@@ -18,6 +17,8 @@ import { SocketAddress } from 'net'
 import Image from 'next/image'
 import illustration from '../public/illustration.gif'
 import useSound from 'use-sound'
+import { Header } from '../components/head/head'
+import { HomePage } from '../components/home/home.page'
 
 export interface User {
   name: string
@@ -29,13 +30,6 @@ interface Props {
 var messageStore: Array<Message> = []
 
 const Home: NextPage<Props> = (props: Props) => {
-  const currentUrl = 'https://randomchat.space/'
-  const previewImage = '../public/illustration.gif'
-  const siteName = 'Random Chat'
-  const pageTitle = 'Random Chat'
-  const description =
-    'Random Chat Space is built for users looking to talk somebody anonymously.'
-
   const messageWindowRef =
     useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>
 
@@ -189,21 +183,10 @@ const Home: NextPage<Props> = (props: Props) => {
              `,
         }}
       />
-      <Head>
-        <title>Random Chat</title>
-        <meta name='description' content={description} />
-        <link rel='canonical' href='https://randomchat.space/' />
-        <meta name='robots' content='index, follow' />
-        <meta name='viewport' content='width=device-width,initial-scale=1.0' />
-        <meta property='og:url' content={currentUrl} key='ogurl' />
-        <meta property='og:image' content={previewImage} key='ogimage' />
-        <meta property='og:site_name' content={siteName} key='ogsitename' />
-        <meta property='og:title' content={pageTitle} key='ogtitle' />
-        <meta property='og:description' content={description} key='ogdesc' />
-      </Head>
+      <Header />
       {currentUser === null ? (
         <div className='grid grid-cols-2 grid-flow-row h-1/2 md:h-screen flex items-center'>
-          <div className='col-span-2 md:col-span-1'>
+          <div className='col-span-2 md:col-span-1 hidden md:inline'>
             <Image
               src={illustration}
               width='50%'
@@ -212,7 +195,7 @@ const Home: NextPage<Props> = (props: Props) => {
             />
           </div>
           <div className='col-span-2 md:col-span-1'>
-            <LoginWindow onStart={onStart} />
+            <HomePage onStart={onStart} />
           </div>
         </div>
       ) : (
