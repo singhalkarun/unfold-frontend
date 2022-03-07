@@ -17,6 +17,7 @@ import io from 'socket.io-client'
 import { SocketAddress } from 'net'
 import Image from 'next/image'
 import illustration from '../public/happy.png'
+import useSound from 'use-sound'
 
 export interface User {
   name: string
@@ -39,6 +40,10 @@ const Home: NextPage<Props> = (props: Props) => {
     useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>
 
   const router = useRouter()
+
+  const [play] = useSound('/sounds/notification.mp3', {
+    interrupt: true,
+  })
 
   const [connectedUser, setConnectedUser] = useState<User | null>(null)
 
@@ -73,6 +78,8 @@ const Home: NextPage<Props> = (props: Props) => {
     messageStore.push(message)
 
     setMessages([...messageStore])
+
+    play()
 
     setTimeout(() => {
       if (messageWindowRef.current) {

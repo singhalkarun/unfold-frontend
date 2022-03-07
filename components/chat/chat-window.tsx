@@ -61,14 +61,14 @@ export const ChatWindow: NextPage<Props> = (props: Props) => {
             <div className='hidden md:inline col-span-1 '></div>
             <div
               ref={props.messageWindowRef}
-              className='m-4 rounded no-scrollbar bg-gradient-to-r from-green-300  to-purple-300 col-span-8 md:col-span-6 px-2 pt-2 pb-2 overflow-y-scroll'
+              className='m-2 rounded no-scrollbar bg-gradient-to-r from-green-300  to-purple-300 col-span-8 md:col-span-6 px-2 pt-2 pb-2 overflow-y-scroll'
             >
               {props.messages.map((message: Message, index: number) => {
                 if (message.type === MessageType.Sent) {
                   return (
                     <div
                       key={index}
-                      className='content-end mb-2 flex justify-end text-lg'
+                      className='content-end mb-2 flex justify-end text-md md:text-lg'
                     >
                       <div className=' bg-white grid grid-row-2 rounded-t-md rounded-t-md rounded-bl-md p-2 w-fit'>
                         <p className='row-span-1 text-sm font-bold flex justify-start'>
@@ -82,7 +82,7 @@ export const ChatWindow: NextPage<Props> = (props: Props) => {
                   return (
                     <div
                       key={index}
-                      className='content-end w-fit mb-2 rounded-t-md rounded-br-md p-2 bg-white text-lg'
+                      className='content-end w-fit mb-2 rounded-t-md rounded-br-md p-2 bg-white text-md md:text-lg'
                     >
                       <p className='row-span-1 text-sm font-bold flex justify-start'>
                         {props.connectedUser?.name}
@@ -120,7 +120,7 @@ export const ChatWindow: NextPage<Props> = (props: Props) => {
                 onChange={(e) => {
                   setText(e.target.value)
                 }}
-                className='px-4 py-1 text-xl md:text-2xl col-span-6 rounded border-2 border-black my-6 mx-1 md:m-4'
+                className='px-4 py-1 text-lg md:text-2xl col-span-6 rounded border-2 border-black  mx-1 m-4'
               />
               <div
                 className='rounded flex justify-center items-center bg-green-500 my-6 mx-1 md:m-4 col-span-2 md:col-span-1 cursor-pointer'
