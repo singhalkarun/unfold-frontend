@@ -2,11 +2,12 @@ import Head from 'next/head'
 
 export const Header = () => {
   const currentUrl = 'https://unfold.fun/'
-  const previewImage = '../public/illustration.gif'
+  const previewImage = 'https://unfold.fun/images/illustration.gif'
   const siteName = 'UnFold'
   const pageTitle = 'UnFold Yourself'
   const description =
     'UnFold is an ecosystem of apps to help you improve your mental health.'
+  const imageAlt = 'A happy person'
 
   return (
     <Head>
@@ -20,6 +21,7 @@ export const Header = () => {
       <meta property='og:site_name' content={siteName} key='ogsitename' />
       <meta property='og:title' content={pageTitle} key='ogtitle' />
       <meta property='og:description' content={description} key='ogdesc' />
+      <meta property='og:image:alt' content={imageAlt} key='ogimagealt' />
     </Head>
   )
 }
