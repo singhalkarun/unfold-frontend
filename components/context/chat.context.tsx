@@ -12,9 +12,11 @@ import { Message } from '../chat/chat-window'
 
 interface AppContextInterface {
   messages: Array<Message>
-  setMessages: Function
   messageWindowRef: MutableRefObject<HTMLDivElement>
+  addMessage: Function
+  clearMessages: Function
 }
+let messageStore: Array<Message> = []
 
 const ChatContext = createContext<AppContextInterface | null>(null)
 
@@ -25,6 +27,17 @@ interface props {
 export const ChatProvider: NextPage<props> = ({ children }) => {
   const [messages, setMessages] = useState<Array<Message>>([])
 
+  const addMessage = (message: Message) => {
+    messageStore.push(message)
+
+    setMessages([...messageStore])
+  }
+
+  const clearMessages = () => {
+    messageStore = []
+    setMessages([])
+  }
+
   const messageWindowRef =
     useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>
 
@@ -32,8 +45,9 @@ export const ChatProvider: NextPage<props> = ({ children }) => {
     <ChatContext.Provider
       value={{
         messages,
-        setMessages,
         messageWindowRef,
+        addMessage,
+        clearMessages,
       }}
     >
       {children}

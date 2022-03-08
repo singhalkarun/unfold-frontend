@@ -24,7 +24,7 @@ interface props {
 
 export const SocketProvider: NextPage<props> = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null)
-  const { messages, setMessages, messageWindowRef } = useChat()
+  const { messages, addMessage, messageWindowRef, clearMessages } = useChat()
 
   const { setConnectedUser, setCurrentUser } = useUser()
 
@@ -38,7 +38,7 @@ export const SocketProvider: NextPage<props> = ({ children }) => {
       type: MessageType.Received,
     }
 
-    setMessages([...messages, message])
+    addMessage(message)
 
     play()
 
@@ -63,7 +63,7 @@ export const SocketProvider: NextPage<props> = ({ children }) => {
       text,
     })
 
-    setMessages([...messages, message])
+    addMessage(message)
   }
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export const SocketProvider: NextPage<props> = ({ children }) => {
 
     socket?.on('userDisconnect', () => {
       setConnectedUser(null)
-      setMessages([])
+      clearMessages()
 
       socket.emit('userConnect', {})
     })
@@ -119,7 +119,7 @@ export const SocketProvider: NextPage<props> = ({ children }) => {
 
   const onExit = () => {
     setConnectedUser(null)
-    setMessages([])
+    clearMessages()
 
     socket?.emit('userDisconnect', {})
 
