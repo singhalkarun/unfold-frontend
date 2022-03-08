@@ -5,7 +5,7 @@ import { LoginSignupComponent } from './components/login-signup.component'
 import { StartChatComponent } from './components/start-chat.component'
 
 interface Props {
-  onStart: Function
+  socketServerUrl: string
 }
 
 export const HomePage: NextPage<Props> = (props: Props) => {
@@ -30,18 +30,20 @@ export const HomePage: NextPage<Props> = (props: Props) => {
       )}
 
       {isLoginSignup ? (
-        <LoginSignupComponent
-          onCheck={(phone: string, e: any) => {
-            e.preventDefault()
-            Swal.fire({
-              title: 'Work in Progress.',
-              backdrop: 'rgba(0,0,123,0.4)',
-            })
-          }}
-        />
+        <LoginSignupComponent />
       ) : (
-        <StartChatComponent onStart={props.onStart} />
+        <StartChatComponent socketServerUrl={props.socketServerUrl} />
       )}
     </div>
   )
+}
+
+export async function getStaticProps() {
+  const socketServerUrl = process.env.socketServerUrl
+
+  return {
+    props: {
+      socketServerUrl,
+    },
+  }
 }

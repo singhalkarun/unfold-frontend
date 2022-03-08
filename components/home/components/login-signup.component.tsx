@@ -1,12 +1,17 @@
 import { NextPage } from 'next/types'
 import { useState } from 'react'
+import Swal from 'sweetalert2'
 
-interface Props {
-  onCheck: Function
-}
-
-export const LoginSignupComponent: NextPage<Props> = (props: Props) => {
+export const LoginSignupComponent: NextPage = () => {
   const [phone, setPhone] = useState('')
+
+  const onCheck = (phone: string, e: any) => {
+    e.preventDefault()
+    Swal.fire({
+      title: 'Work in Progress.',
+      backdrop: 'rgba(0,0,123,0.4)',
+    })
+  }
 
   return (
     <div className='mx-2 my-auto md:m-auto  p-8 rounded font-heading'>
@@ -15,7 +20,7 @@ export const LoginSignupComponent: NextPage<Props> = (props: Props) => {
       <div className='row-span-1'>
         <form
           onSubmit={(e) => {
-            props.onCheck(phone, e)
+            onCheck(phone, e)
           }}
         >
           <div className=' border-2 border-black rounded p-2 text-lg mb-4 flex items-center'>

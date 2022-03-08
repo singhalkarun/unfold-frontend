@@ -1,12 +1,14 @@
 import { NextPage } from 'next/types'
 import { useState } from 'react'
+import { useSocket } from '../../context/socket.context'
 
 interface Props {
-  onStart: Function
+  socketServerUrl: string
 }
 
 export const StartChatComponent: NextPage<Props> = (props: Props) => {
   const [name, setName] = useState('')
+  const { onStart } = useSocket()
 
   return (
     <div className='mx-2 my-auto md:m-auto  p-8 rounded font-heading'>
@@ -15,7 +17,7 @@ export const StartChatComponent: NextPage<Props> = (props: Props) => {
       <div className='row-span-1'>
         <form
           onSubmit={() => {
-            props.onStart(name)
+            onStart(name, props.socketServerUrl)
           }}
         >
           <div className=' border-2 border-black rounded p-2 text-lg mb-4'>

@@ -13,39 +13,24 @@ import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { Socket } from 'socket.io-client'
 import io from 'socket.io-client'
-import { SocketAddress } from 'net'
 import Image from 'next/image'
 import illustration from '../public/images/illustration.gif'
 import useSound from 'use-sound'
 import { Header } from '../components/head/head'
 import { HomePage } from '../components/home/home.page'
-
-export interface User {
-  name: string
-}
+import { useUser } from '../components/context/user.context'
+import { useSocket } from '../components/context/socket.context'
+import { useChat } from '../components/context/chat.context'
 
 interface Props {
   socketServerUrl: string
 }
-var messageStore: Array<Message> = []
 
 const Home: NextPage<Props> = (props: Props) => {
-  const messageWindowRef =
-    useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>
+  const { currentUser } = useUser()
+  const { socket } = useSocket()
 
   const router = useRouter()
-
-  const [play] = useSound('/sounds/notification.mp3', {
-    interrupt: true,
-  })
-
-  const [connectedUser, setConnectedUser] = useState<User | null>(null)
-
-  const [currentUser, setCurrentUser] = useState<User | null>(null)
-
-  const [messages, setMessages] = useState<Array<Message>>([])
-
-  const [socket, setSocket] = useState<Socket | null>(null)
 
   useEffect(() => {
     window.addEventListener('onbeforeunload', () => {
@@ -62,106 +47,6 @@ const Home: NextPage<Props> = (props: Props) => {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [router.events])
-
-  const onReceive = (text: string) => {
-    const message: Message = {
-      text,
-      type: MessageType.Received,
-    }
-
-    messageStore.push(message)
-
-    setMessages([...messageStore])
-
-    play()
-
-    setTimeout(() => {
-      if (messageWindowRef.current) {
-        messageWindowRef.current.scrollTop =
-          messageWindowRef.current?.scrollHeight
-      }
-    }, 500)
-  }
-
-  const onSend = (text: string) => {
-    if (text.trim() === '') {
-      return
-    }
-    const message: Message = {
-      text,
-      type: MessageType.Sent,
-    }
-
-    socket?.emit('message', {
-      text,
-    })
-
-    messageStore.push(message)
-
-    setMessages([...messageStore])
-  }
-
-  const onExit = () => {
-    setConnectedUser(null)
-    setMessages([])
-    messageStore = []
-
-    socket?.emit('userDisconnect', {})
-
-    setCurrentUser(null)
-
-    socket?.close()
-  }
-
-  useEffect(() => {
-    socket?.onAny((event) => {
-      console.log(event)
-    })
-    socket?.on('connect', () => {
-      socket.emit('userConnect', {})
-    })
-
-    socket?.on('userConnect', (args: any) => {
-      const user: User = {
-        name: args.name,
-      }
-
-      setConnectedUser(user)
-    })
-
-    socket?.on('message', (args: any) => {
-      onReceive(args.text)
-    })
-
-    socket?.on('userDisconnect', () => {
-      setConnectedUser(null)
-      setMessages([])
-      messageStore = []
-
-      socket.emit('userConnect', {})
-    })
-
-    return () => {
-      socket?.close()
-    }
-  }, [socket])
-
-  const onStart = (name: string) => {
-    const user: User = {
-      name,
-    }
-
-    const socket: Socket = io(props.socketServerUrl, {
-      path: '/websocket',
-      query: {
-        name,
-      },
-    })
-
-    setSocket(socket)
-
-    setCurrentUser(user)
-  }
 
   return (
     <div className='overflow-hidden'>
@@ -195,18 +80,11 @@ const Home: NextPage<Props> = (props: Props) => {
             />
           </div>
           <div className='col-span-2 md:col-span-1'>
-            <HomePage onStart={onStart} />
+            <HomePage socketServerUrl={props.socketServerUrl} />
           </div>
         </div>
       ) : (
-        <ChatWindow
-          currentUser={currentUser}
-          connectedUser={connectedUser}
-          messages={messages}
-          onSend={onSend}
-          onExit={onExit}
-          messageWindowRef={messageWindowRef}
-        />
+        <ChatWindow />
       )}
     </div>
   )
