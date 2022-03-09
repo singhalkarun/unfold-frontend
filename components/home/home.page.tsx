@@ -3,6 +3,9 @@ import { useState } from 'react'
 import Swal from 'sweetalert2'
 import { LoginSignupComponent } from './components/login-signup.component'
 import { StartChatComponent } from './components/start-chat.component'
+import PhoneIcon from '@mui/icons-material/Phone'
+import LoginIcon from '@mui/icons-material/Login'
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 
 interface Props {
   socketServerUrl: string
@@ -18,16 +21,19 @@ export const HomePage: NextPage<Props> = (props: Props) => {
           className='absolute right-8 top-8 rounded p-2 text-lg bg-blue-400'
           onClick={() => setIsLoginSignup(false)}
         >
-          Start Chat
+          <ChatBubbleOutlineIcon />
         </button>
       ) : (
         <button
           className='absolute right-8 top-8 rounded p-2 text-lg bg-blue-400'
           onClick={() => setIsLoginSignup(true)}
         >
-          Login/Signup
+          <LoginIcon />
         </button>
       )}
+      {/* <button className='absolute right-8 bottom-8 rounded p-2 text-lg bg-blue-400'>
+        <PhoneIcon />
+      </button> */}
 
       {isLoginSignup ? (
         <LoginSignupComponent />

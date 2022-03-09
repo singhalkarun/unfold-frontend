@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { MailchimpScript } from '../mailchimp/mailchimp.script'
 
 export const Header = () => {
   const currentUrl = 'https://unfold.fun/'
@@ -22,6 +23,7 @@ export const Header = () => {
       <meta property='og:title' content={pageTitle} key='ogtitle' />
       <meta property='og:description' content={description} key='ogdesc' />
       <meta property='og:image:alt' content={imageAlt} key='ogimagealt' />
+      <MailchimpScript />
     </Head>
   )
 }
