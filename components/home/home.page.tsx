@@ -31,9 +31,14 @@ export const HomePage: NextPage<Props> = (props: Props) => {
           <LoginIcon />
         </button>
       )}
-      {/* <button className='absolute right-8 bottom-8 rounded p-2 text-lg bg-blue-400'>
+      <button
+        className='absolute right-8 bottom-8 rounded p-2 text-lg bg-blue-400'
+        onClick={() =>
+          window.open('https://calendly.com/singhalkarun/30min', '_blank')
+        }
+      >
         <PhoneIcon />
-      </button> */}
+      </button>
 
       {isLoginSignup ? (
         <LoginSignupComponent />
