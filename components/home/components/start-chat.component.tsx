@@ -23,7 +23,7 @@ export const StartChatComponent: NextPage<Props> = (props: Props) => {
           <div className=' border-2 border-black rounded p-2 text-lg mb-4'>
             <input
               required
-              className='outline-0 bg-transparent text-white placeholder-white'
+              className='outline-0 bg-transparent text-white md:text-black placeholder-white md:placeholder-black'
               placeholder='Enter you name here'
               onChange={(e) => {
                 setName(e.target.value)
