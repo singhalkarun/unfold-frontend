@@ -79,7 +79,7 @@ const Home: NextPage<Props> = (props: Props) => {
               layout='responsive'
             />
           </div>
-          <div className='col-span-2 md:col-span-1'>
+          <div className='col-span-2 md:col-span-1 bg-chat-widget bg-opacity-25 bg-no-repeat bg-cover md:bg-none'>
             <HomePage socketServerUrl={props.socketServerUrl} />
           </div>
         </div>

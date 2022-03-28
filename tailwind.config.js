@@ -16,6 +16,9 @@ module.exports = {
       colors: {
         skyBlue: '#85dfef',
       },
+      backgroundImage: (theme) => ({
+        'chat-widget': "url('../public/images/background.png')",
+      }),
     },
   },
   plugins: [],

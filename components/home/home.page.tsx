@@ -15,7 +15,7 @@ export const HomePage: NextPage<Props> = (props: Props) => {
   const [isLoginSignup, setIsLoginSignup] = useState(false)
 
   return (
-    <div className='flex h-screen justify-center'>
+    <div className='flex h-screen justify-center '>
       {isLoginSignup === true ? (
         <button
           className='absolute right-8 top-8 rounded p-2 text-lg bg-blue-400'
